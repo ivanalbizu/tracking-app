@@ -1,0 +1,33 @@
+{
+  "name": "user-time-tracker",
+  "version": "1.0.0",
+  "description": "User Time Tracker - Vue Frontend | Node Backend",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./app.js",
+    "dev": "nodemon ./app.js"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "vue-client/*",
+      "vue-user-tracker/*",
+      "data/**/*.json"
+    ]
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-history-api-fallback": "^1.6.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.16",
+    "morgan": "^1.10.0",
+    "socket.io": "^2.3.0"
+  }
+}

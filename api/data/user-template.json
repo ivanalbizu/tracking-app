@@ -1,0 +1,39 @@
+{
+  "id": 1,
+  "name": "Iván González Albizu",
+  "email": "ivan.albizu@gemail.com",
+  "role": [
+    "ADMIN",
+    "USER"
+  ],
+  "config": {
+    "journal": {
+      "1": {
+        "day": "Lunes",
+        "start": "08:00",
+        "end": "17:30"
+      },
+      "2": {
+        "day": "Martes",
+        "start": "08:00",
+        "end": "17:30"
+      },
+      "3": {
+        "day": "Miércoles",
+        "start": "08:00",
+        "end": "17:30"
+      },
+      "4": {
+        "day": "Jueves",
+        "start": "08:00",
+        "end": "17:30"
+      },
+      "5": {
+        "day": "Viernes",
+        "start": "09:00",
+        "end": "15:00"
+      }
+    }
+  },
+  "tracking": {}
+}

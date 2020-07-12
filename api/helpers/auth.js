@@ -22,7 +22,6 @@ const auth = (req, res, next) => {
     if (token == null) return res.sendStatus(401)
     
     const decoded = jwt.verify(token, jwtKey);
-    console.log('decoded :>> ', decoded);
     req.user = decoded.user;
   } catch (error) {
     return res.sendStatus(403)

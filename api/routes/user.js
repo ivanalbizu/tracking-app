@@ -4,11 +4,9 @@ const fspromises = require('../helpers/fspromises');
 const request = require('../helpers/request');
 const { auth } = require('../helpers/auth');
 
-
 router.get('/', auth, async (req, res) => {
   try {
     const { data, today, file } = await request.getDataTrack(req, res);
-    console.log('data', data.tracking[today]);
     res.json(data.tracking[today])
   } catch(error) {
     console.log('error start :>> ', error)

@@ -3,7 +3,7 @@
     <a class="ham" href="#!" type="button">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="#212121" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
     </a>
-    <TheNavigation />
+    <TheHeader />
     <TheAside />
     <main class="main" id="app">
       <router-view/>
@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import TheNavigation from '@/components/TheNavigation'
+import TheHeader from '@/components/TheHeader'
 import TheAside from '@/components/TheAside'
 
 export default {
   components: {
-    TheNavigation,
+    TheHeader,
     TheAside
   }
 }
@@ -233,11 +233,8 @@ input, button {
   height: 16px;
   border-radius: 3px;
 }
-.active {
-  svg {
-    stroke: var(--color-orange);
-  }
-  .notification {
+.router-link-exact-active {
+  .notification.active {
     display: inline-flex;
   }
 }
@@ -251,6 +248,12 @@ input, button {
     height: 80px;
     border-bottom: 1px solid #ddd;
     border-left: 3px solid transparent;
+    &.router-link-exact-active {
+      svg {
+        stroke: var(--color-orange);
+      }
+      border-left: 3px solid var(--color-orange);
+    }
     &:focus {
       outline: none;
     }
@@ -265,30 +268,7 @@ input, button {
     }
   }
 }
-.home .nav-home {
-  border-left: 3px solid var(--color-orange);
-  svg {
-    stroke: var(--color-orange);
-  }
-}
-.stats .nav-stats {
-  border-left: 3px solid var(--color-orange);
-  svg {
-    stroke: var(--color-orange);
-  }
-}
-.user .nav-user {
-  border-left: 3px solid var(--color-orange);
-  svg {
-    stroke: var(--color-orange);
-  }
-}
-.config .nav-config {
-  border-left: 3px solid var(--color-orange);
-  svg {
-    stroke: var(--color-orange);
-  }
-}
+
 .main {
   padding: 30px 40px;
 }
@@ -540,29 +520,18 @@ summary {
       display: inline-flex;
       width: 25%;
       height: 50px;
-      border-color: #fff;
-      border-width: 0 0 3px 0;
+      &.router-link-exact-active {
+        svg {
+          stroke: var(--color-orange);
+        }
+        border: 0;
+        border-bottom: 3px solid var(--color-orange);
+      }
     }
   }
   .notification {
     top: 4px;
     right: 4px;
-  }
-  .home .nav-home {
-    border-left: 0;
-    border-bottom: 3px solid var(--color-orange);
-  }
-  .stats .nav-stats {
-    border-left: 0;
-    border-bottom: 3px solid var(--color-orange);
-  }
-  .user .nav-user {
-    border-left: 0;
-    border-bottom: 3px solid var(--color-orange);
-  }
-  .config .nav-config {
-    border-left: 0;
-    border-bottom: 3px solid var(--color-orange);
   }
   .title-page {
     font-size: 1.5em;

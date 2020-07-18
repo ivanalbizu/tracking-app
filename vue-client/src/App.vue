@@ -15,10 +15,29 @@
 import TheHeader from '@/components/TheHeader'
 import TheAside from '@/components/TheAside'
 
+import store from '@/store'
+
 export default {
   components: {
     TheHeader,
     TheAside
+  },
+
+  created () {    
+    window.addEventListener('beforeunload', this.userGo)
+    this.userEnter()
+  },
+
+  methods: {    
+    userGo () {
+      this.$socket.emit('user_go', store.getters['auth/user']?.email)
+      console.log('-------------alguien ha salido');
+    },
+    userEnter () {
+      if (store.getters['auth/user']?.email) {
+        this.$socket.emit('user_enter', store.getters['auth/user'].email)
+      }
+    }
   }
 }
 </script>

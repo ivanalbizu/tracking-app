@@ -1,13 +1,6 @@
 const fspromises = require('./fspromises');
+const date = require('./date');
 
-const getDate = today => {
-  const day = today.getDate()
-  const month = today.getMonth() + 1
-  const year = today.getFullYear()
-
-  if (month < 10) return `${day}-0${month}-${year}`
-  else return `${day}-${month}-${year}`
-}
 
 const startNewMonth = async (file, email) => {
   const read = await fspromises.readPromise(`./data/${email}/user-template.json`)
@@ -18,7 +11,7 @@ const startNewMonth = async (file, email) => {
 
 const getData = async (req, res) => {
   try {
-    const today = getDate(new Date());
+    const today = date.getDate(new Date());
     const email = req.user.email;
     const file = `./data/${email}/${today.split('-')[2]}-${today.split('-')[1]}.json`;
     const read = await fspromises.readPromise(file);
@@ -33,9 +26,9 @@ const getData = async (req, res) => {
 const getDataTrack = async (req, res) => {
   let data;
   try {
-    const today = getDate(new Date());
+    const today = date.getDate(new Date());
     const email = req.user.email;
-    console.log('today :>> ', today);
+
     const file = `./data/${email}/${today.split('-')[2]}-${today.split('-')[1]}.json`;
     const exist = await fspromises.checkFileExists(file);
     if (!exist) {

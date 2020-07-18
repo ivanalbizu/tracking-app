@@ -17,7 +17,7 @@ const unless = (middleware, ...paths) => {
   }
 }
 
-app.use(morgan('tiny'));
+//app.use(morgan('tiny'));
 app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json({
@@ -39,16 +39,8 @@ app.use(history());
 app.use(express.static(path.join(__dirname + '/public')))
 //app.use(unless(auth, "/signin"))
 
-const server = app.listen(port, () => console.log("Listening .."))
+const server = app.listen(port, () => console.log(`Listening on ${port}`))
 
 const io = new ioServer(server)
 
-
-io.on('connection', (socket) => {
-  console.log('Conectado :>> ', socket.id);
-  socket.on('disconnect', () => {
-    console.log('Desconectado :>> ', socket.id);
-  });
-
-});
-
+require('./modules/socket')(io)

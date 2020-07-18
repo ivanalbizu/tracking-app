@@ -17,7 +17,7 @@ router.get('/', auth, async (req, res) => {
   try {
     const mail = req.user.email;
     const today = getDate(new Date());
-    console.log('today :>> ', today);
+
     const file = `./data/${mail}/${today.split('-')[2]}-${today.split('-')[1]}.json`;
 
     //await startNewMonth(file, mail);

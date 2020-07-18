@@ -3,10 +3,18 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
+import VueSocketIO from 'vue-socket.io'
+//import SocketIO from 'socket.io-client'
 
 require('@/store/subscriber')
 
 axios.defaults.baseURL = 'http://localhost:8081/api/'
+
+Vue.use(new VueSocketIO({
+  debug: true,
+  connection: 'http://localhost:8081'
+}));
+
 
 Vue.config.productionTip = false
 

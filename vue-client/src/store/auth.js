@@ -36,11 +36,10 @@ export default {
       if (token) {
         commit('SET_TOKEN', token)
       }
-      console.log('despues 1 if');
+
       if (!state.token) {
         return
       }
-      console.log('despues 2 if');
 
       try {
         const response = await axios.get('auth/me')

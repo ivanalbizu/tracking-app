@@ -55,10 +55,8 @@ export default {
       let a = time.split(':');
       if (isNaN(a[0])) {
         const date = new Date();
-        console.log('date :>> ', date);
         a[0] = date.getHours();
         a[1] = date.getMinutes();
-        console.log('a :>> ', a);
       }
       return (+a[0]) * 60 + (+a[1]);
     },

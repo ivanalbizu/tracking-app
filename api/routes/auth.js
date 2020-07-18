@@ -52,7 +52,6 @@ const signin = async (req, res) => {
 }
 
 const me = async (req, res) => {
-	console.log('req.user en ME :>> ', req.user);
 	try {
 		const user = await User.findOne({ email: req.user.email })
 		res.json({

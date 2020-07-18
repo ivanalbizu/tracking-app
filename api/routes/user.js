@@ -35,9 +35,9 @@ router.post('/start', auth, async (req, res) => {
 router.post('/play', auth, async (req, res) => {
   try {
     const { data, today, file } = await request.getData(req, res)
-    const date = data.tracking[today]
+    const trackToday = data.tracking[today]
     
-    data.tracking[today][date.length-1]["time_end"] = req.body.time
+    data.tracking[today][trackToday.length-1]["time_end"] = req.body.time
     const record = {
       "type": "work",
       "time_start": req.body.time,
@@ -54,12 +54,12 @@ router.post('/play', auth, async (req, res) => {
 router.post('/pause', auth, async (req, res) => {
   try {
     const { data, today, file } = await request.getData(req, res)
-    const date = data.tracking[today]
+    const trackToday = data.tracking[today]
 
-    data.tracking[today][date.length-1]["time_end"] = req.body.time
+    data.tracking[today][trackToday.length-1]["time_end"] = req.body.time
     const record = {
       "type": "break",
-      "time_start": data.tracking[today][date.length-1].time_end,
+      "time_start": trackToday[trackToday.length-1].time_end,
       "time_end": "En curso"
     }
     data.tracking[today].push(record)
@@ -74,9 +74,9 @@ router.post('/pause', auth, async (req, res) => {
 router.post('/stop', auth, async (req, res) => {
   try {
     const { data, today, file } = await request.getData(req, res)
-    const date = data.tracking[today]
+    const trackToday = data.tracking[today]
 
-    data.tracking[today][date.length-1]["time_end"] = req.body.time
+    data.tracking[today][trackToday.length-1]["time_end"] = req.body.time
     await fspromises.writePromise(file, JSON.stringify(data, null, 2))
 
     res.json(data.tracking[today])

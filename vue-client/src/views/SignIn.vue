@@ -44,17 +44,6 @@ export default {
       signIn: 'auth/signIn'
     }),
 
-/*
-    async submit() {
-      try {
-        await this.signIn(this.form)
-        this.$router.push('/')
-      } catch (error) {
-        this.$router.push('/login')
-        console.log(error);
-      }
-    }
-*/
     async submit() {
       this.signIn(this.form)
         .then(async () => {

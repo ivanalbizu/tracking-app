@@ -23,19 +23,23 @@ export default {
     TheAside
   },
 
-  created () {    
-    window.addEventListener('beforeunload', this.userGo)
+  created () {
+    window.addEventListener('beforeunload', this.userLeave)
     this.userEnter()
   },
 
-  methods: {    
-    userGo () {
-      this.$socket.emit('user_go', store.getters['auth/user']?.email)
-      console.log('-------------alguien ha salido');
+  methods: {
+    userLeave () {
+      this.$socket.emit('user_leave', store.getters['auth/user']?.email)
     },
     userEnter () {
       if (store.getters['auth/user']?.email) {
         this.$socket.emit('user_enter', store.getters['auth/user'].email)
+      }
+    },
+    userPause () {
+      if (store.getters['auth/user']?.email) {
+        this.$socket.emit('user_pause', store.getters['auth/user'].email)
       }
     }
   }

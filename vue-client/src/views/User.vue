@@ -42,6 +42,7 @@
 
 <script>
 import axios from 'axios'
+import store from '@/store'
 
 export default {
   data() {
@@ -114,6 +115,10 @@ export default {
       }
     },
     async pause() {
+      if (store.getters['auth/user']?.email) {
+        this.$socket.emit('user_pause', store.getters['auth/user'].email)
+      }
+
       this.status = { start: false, play: true, pause: false, stop: true };
       const data = this._request();
       try {

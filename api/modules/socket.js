@@ -22,17 +22,20 @@ module.exports = io => {
     socket.on('disconnect', () => {
       console.log('Desconectado :>> ', socket.id);
     });
-
+    
     socket.on('user_enter', (data) => {
-      const clientInfo = new Object();
-      clientInfo.email = data;
-      clientInfo.clientId = socket.id;
       clients[data] = socket.id;
       console.log('clients enter:>> ', clients);
     });
 
-    socket.on('user_go', async (mail) => {
+    socket.on('user_pause', (data) => {
+      console.log('pausa:>> ', data);
+    });
+    
+    socket.on('user_leave', async (mail) => {
+      io.sockets.emit('CLIENT_CLOSE', mail);
       delete clients[mail]
+
       const { data, today, file } = await getData(mail);
       const trackToday = data.tracking[today]
       if (trackToday) {

@@ -32,20 +32,22 @@ export default {
     userLeave () {
       this.$socket.emit('user_leave', store.getters['auth/user']?.email)
     },
+
     userEnter () {
       if (store.getters['auth/user']?.email) {
         this.$socket.emit('user_enter', store.getters['auth/user'].email)
       }
     },
+
     userPause () {
       if (store.getters['auth/user']?.email) {
         this.$socket.emit('user_pause', store.getters['auth/user'].email)
       }
     }
+
   }
 }
 </script>
-
 
 <style lang="scss">
 :root {

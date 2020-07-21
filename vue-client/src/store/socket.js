@@ -11,6 +11,6 @@ const socket = {
       state.io = {};
     }
   }
-};
+}
 
-export default socket;
+export default socket

@@ -45,22 +45,26 @@ import axios from 'axios'
 import store from '@/store'
 
 export default {
-  data() {
+  data () {
     return {
       tracks: [],
       date: "",
-      status: {}
+      status: {},
+      notifyID: null
     }
   },
-  created() {
-    this.listarTracks();
-    this.today();
+
+  created () {
+    this.listarTracks()
+    this.today()
   },
+
   methods: {
-    today() {
+    today () {
       this.date = this._getDate(new Date())
     },
-    statusHandler(data) {
+
+    statusHandler (data) {
       if (data) {
         switch (data[data.length - 1].type) {
           case "work":
@@ -79,7 +83,8 @@ export default {
         this.status = { start: true, play: false, pause: false, stop: false }
       }
     },
-    async listarTracks() {
+
+    async listarTracks () {
       //const data = this._request();
       try {
         const result = await axios.get(`/user`);
@@ -94,7 +99,8 @@ export default {
         console.log('error GET track del día: >> ', error);
       }
     },
-    async startDay() {
+
+    async startDay () {
       this.status = { start: false, play: false, pause: true, stop: true };
       const data = this._request();
       try {
@@ -104,7 +110,13 @@ export default {
         console.log('error al enviar POST para comenzar la grabación del día: >> ', error);
       }
     },
-    async play() {
+
+    async play () {
+      if (store.getters['auth/user']?.email) {
+        //this.$socket.emit('user_pause', store.getters['auth/user'].email)
+        this.notifyDelete(this.notifyID)
+      }
+
       this.status = { start: false, play: false, pause: true, stop: true };
       const data = this._request();
       try {
@@ -114,9 +126,12 @@ export default {
         console.log('error al enviar POST para iniciar tiempo de trabajo: >> ', error);
       }
     },
-    async pause() {
+
+    async pause () {
       if (store.getters['auth/user']?.email) {
         this.$socket.emit('user_pause', store.getters['auth/user'].email)
+        this.notifyID = this.notify(10000)
+        console.log('this.notifyID :>> ', this.notifyID);
       }
 
       this.status = { start: false, play: true, pause: false, stop: true };
@@ -128,7 +143,13 @@ export default {
         console.log('error al enviar POST para iniciar tiempo de trabajo: >> ', error);
       }
     },
-    async stop() {
+
+    async stop () {
+      if (store.getters['auth/user']?.email) {
+        //this.$socket.emit('user_pause', store.getters['auth/user'].email)
+        this.notifyDelete(this.notifyID)
+      }
+
       if (this.status.play) this.status = { start: false, play: true, pause: false, stop: true };
       else this.status = { start: false, play: false, pause: true, stop: true };
 
@@ -141,7 +162,7 @@ export default {
       }
     },
 
-    _request() {
+    _request () {
       const date = new Date();
       return {
         date: this._getDate(date),
@@ -149,7 +170,8 @@ export default {
         mail: localStorage.getItem('mail')
       }
     },
-    _getDate(today) {
+
+    _getDate (today) {
       const day = today.getDate()
       const month = today.getMonth() + 1
       const year = today.getFullYear()
@@ -157,9 +179,39 @@ export default {
       if (month < 10) return `${day}-0${month}-${year}`
       else return `${day}-${month}-${year}`
     },
-    _getTime(today) {
+
+    _getTime (today) {
       return today.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    },
+
+    notify (interval) {
+      let timeInterval = null;
+
+      if (!Notification) {
+        alert("Este navegador no soporta las notificaciones del sistema");
+        return;
+      }
+
+      if (Notification.permission !== "granted") Notification.requestPermission();
+
+      const title = 'Simple Title';
+      const options = {
+        icon: 'https://via.placeholder.com/512x512',
+        body: 'Simple piece of body text.\nSecond line of body text :)'
+      };
+
+      timeInterval = window.setInterval(() => {
+        new Notification(title, options);
+        console.log(timeInterval);
+      }, interval);
+
+      return timeInterval
+    },
+
+    notifyDelete (notify) {
+      window.clearInterval(notify)
     }
+
   }
 }
 </script>

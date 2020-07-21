@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export default {
+const auth = {
   namespaced: true,
 
   state: {
@@ -56,3 +56,5 @@ export default {
     }
   }
 }
+
+export default auth

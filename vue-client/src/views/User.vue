@@ -112,10 +112,7 @@ export default {
     },
 
     async play () {
-      if (store.getters['auth/user']?.email) {
-        //this.$socket.emit('user_pause', store.getters['auth/user'].email)
-        this.notifyDelete(this.notifyID)
-      }
+      this.notifyDelete(this.notifyID)
 
       this.status = { start: false, play: false, pause: true, stop: true };
       const data = this._request();
@@ -131,7 +128,7 @@ export default {
       if (store.getters['auth/user']?.email) {
         this.$socket.emit('user_pause', store.getters['auth/user'].email)
         this.notifyID = this.notify(10000)
-        console.log('this.notifyID :>> ', this.notifyID);
+        console.log('Notify created :>> ', this.notifyID);
       }
 
       this.status = { start: false, play: true, pause: false, stop: true };
@@ -145,10 +142,7 @@ export default {
     },
 
     async stop () {
-      if (store.getters['auth/user']?.email) {
-        //this.$socket.emit('user_pause', store.getters['auth/user'].email)
-        this.notifyDelete(this.notifyID)
-      }
+      this.notifyDelete(this.notifyID)
 
       if (this.status.play) this.status = { start: false, play: true, pause: false, stop: true };
       else this.status = { start: false, play: false, pause: true, stop: true };
@@ -185,7 +179,7 @@ export default {
     },
 
     notify (interval) {
-      let timeInterval = null;
+      let notifyID = null;
 
       if (!Notification) {
         alert("Este navegador no soporta las notificaciones del sistema");
@@ -200,16 +194,20 @@ export default {
         body: 'Simple piece of body text.\nSecond line of body text :)'
       };
 
-      timeInterval = window.setInterval(() => {
+      notifyID = window.setInterval(() => {
         new Notification(title, options);
-        console.log(timeInterval);
       }, interval);
 
-      return timeInterval
+      return notifyID
     },
 
     notifyDelete (notify) {
-      window.clearInterval(notify)
+      if (notify) {
+        window.clearInterval(notify)
+        //this.$socket.emit('user_pause', store.getters['auth/user'].email)
+        console.log('Notify deleted :>> ', notify);
+        this.notifyID = null
+      }
     }
 
   }

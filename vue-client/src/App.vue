@@ -23,6 +23,12 @@ export default {
     TheAside
   },
 
+  watch: {
+    '$route' (to) {
+      document.title = to.meta.title || 'Tracker App'
+    }
+  },
+
   created () {
     window.addEventListener('beforeunload', this.userLeave)
     this.userEnter()
@@ -44,7 +50,6 @@ export default {
         this.$socket.emit('user_pause', store.getters['auth/user'].email)
       }
     }
-
   }
 }
 </script>

@@ -11,19 +11,24 @@ Vue.use(VueRouter)
     name: 'home',
     component: Home,
     meta: {
+      title: 'Home Page - Tracker App',
       requiresAuth: true
     }
   },
   {
     path: '/signin',
     name: 'signin',
-    component: () => import(/* webpackChunkName: "signin" */ '../views/SignIn.vue')
+    component: () => import(/* webpackChunkName: "signin" */ '../views/SignIn.vue'),
+    meta: {
+      title: 'Login - Tracker App',
+    }
   },
   {
     path: '/stats',
     name: 'stats',
     component: () => import(/* webpackChunkName: "stats" */ '../views/Stats.vue'),
     meta: {
+      title: 'Stats Page - Tracker App',
       requiresAuth: true
     }
   },
@@ -32,7 +37,8 @@ Vue.use(VueRouter)
     name: 'user',
     component: () => import(/* webpackChunkName: "user" */ '../views/User.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      title: 'Tracking Page - Tracker App',
     }
   },
   {
@@ -40,7 +46,8 @@ Vue.use(VueRouter)
     name: 'config',
     component: () => import(/* webpackChunkName: "config" */ '../views/Config.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      title: 'Personal Config Page - Tracker App',
     }
   }
 ]

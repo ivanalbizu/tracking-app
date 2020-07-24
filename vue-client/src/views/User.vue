@@ -154,8 +154,7 @@ export default {
       const date = new Date();
       return {
         date: this._getDate(date),
-        time: this._getTime(date),
-        mail: localStorage.getItem('mail')
+        time: this._getTime(date)
       }
     },
 

@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper">
-    <a class="ham" href="#!" type="button">
+    <button class="ham" type="button">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="#212121" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    </a>
+    </button>
     <TheHeader />
     <TheAside />
     <main class="main" id="app">
@@ -239,28 +239,6 @@ input, button {
   .nav {
     position: sticky;
     top: -1px;
-  }
-}
-.alert {
-  display: flex;
-}
-.notification {
-  display: none;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 16px;
-  right: 30px;
-  font-size: 10px;
-  background-color: var(--color-orange);
-  color: #fff;
-  width: 16px;
-  height: 16px;
-  border-radius: 3px;
-}
-.router-link-exact-active {
-  .notification.active {
-    display: inline-flex;
   }
 }
 .nav {
@@ -553,10 +531,6 @@ summary {
         border-bottom: 3px solid var(--color-orange);
       }
     }
-  }
-  .notification {
-    top: 4px;
-    right: 4px;
   }
   .title-page {
     font-size: 1.5em;

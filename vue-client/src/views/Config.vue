@@ -8,9 +8,7 @@
 				</header>
 				<main class="card__body">
 					<div class="form-control">
-						<div>TO-DO Notificaciones por tiempos de inactividad durante las pausas. Y recordatorios</div>
-						<div>TO-DO jornada de verano</div>
-						<div>TO-DO guardias de fines de semana</div>
+						<div>TO-DO Notificaciones por tiempos de inactividad durante las pausas</div>
 					</div>
 				</main>
 			</article>

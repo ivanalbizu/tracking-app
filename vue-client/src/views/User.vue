@@ -125,11 +125,7 @@ export default {
     },
 
     async pause () {
-      if (store.getters['auth/user']?.email) {
-        this.$socket.emit('user_pause', store.getters['auth/user'].email)
-        this.notifyID = this.notify(10000)
-        console.log('Notify created :>> ', this.notifyID);
-      }
+      this.notifyID = this.notifyCreate(7000)
 
       this.status = { start: false, play: true, pause: false, stop: true };
       const data = this._request();
@@ -142,8 +138,6 @@ export default {
     },
 
     async stop () {
-      this.notifyDelete(this.notifyID)
-
       if (this.status.play) this.status = { start: false, play: true, pause: false, stop: true };
       else this.status = { start: false, play: false, pause: true, stop: true };
 
@@ -178,25 +172,35 @@ export default {
       return today.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     },
 
-    notify (interval) {
+    notifyCreate (timeout) {
+      if (!store.getters['auth/user']?.email) return
+
       let notifyID = null;
 
       if (!Notification) {
-        alert("Este navegador no soporta las notificaciones del sistema");
+        console.log("Este navegador no soporta las notificaciones del sistema");
         return;
       }
 
       if (Notification.permission !== "granted") Notification.requestPermission();
 
-      const title = 'Simple Title';
+      const title = 'Tarea en pausa';
       const options = {
         icon: 'https://via.placeholder.com/512x512',
-        body: 'Simple piece of body text.\nSecond line of body text :)'
+        body: `La tarea está en pausa por XX tiempo`
       };
+  
+      notifyID = window.setTimeout(() => {
+        const notification = new Notification(title, options);
+        notification.onclick = function(event) {
+          event.preventDefault();
+          window.open('http://localhost:8080/user', '_blank');
+        }
+        this.notifyID = null;
+      }, timeout);
 
-      notifyID = window.setInterval(() => {
-        new Notification(title, options);
-      }, interval);
+      this.$socket.emit('user_pause', store.getters['auth/user'].email)
+      console.log('Notify created :>> ', notifyID);
 
       return notifyID
     },
@@ -204,7 +208,6 @@ export default {
     notifyDelete (notify) {
       if (notify) {
         window.clearInterval(notify)
-        //this.$socket.emit('user_pause', store.getters['auth/user'].email)
         console.log('Notify deleted :>> ', notify);
         this.notifyID = null
       }

@@ -27,7 +27,15 @@ router.post('/', auth, async (req, res) => {
   } catch(error) {
     console.log('error save journal week :>> ', error)
   }
-  
+})
+
+router.post('/reset-password', auth, async (req, res) => {
+  try {
+    console.log(req.body);
+    res.json('data')
+  } catch(error) {
+    console.log('error reset password :>> ', error)
+  }
 })
 
 module.exports = router;

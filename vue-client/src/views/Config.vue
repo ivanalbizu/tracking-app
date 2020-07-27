@@ -4,21 +4,16 @@
 		<div class="cards">
 			<article class="card">
 				<header class="card__header">
-					<h3>Alertas</h3>
+					<h3>Jornada laboral</h3>
 				</header>
 				<main class="card__body">
 					<div class="form-control">
-						<div>TO-DO Notificaciones por tiempos de inactividad durante las pausas</div>
-					</div>
-				</main>
-				<main class="card__body">
-					<div class="form-control">
-						<div class="planing-time">
+						<div class="planning-time">
 							<div class="dia"></div>
 							<div class="comienzo">Hora inicio</div>
 							<div class="fin">Hora fin</div>
 						</div>
-						<div v-for="journal in journals" :key="journal.day" class="planing-time">
+						<div v-for="journal in journals" :key="journal.day" class="planning-time">
 							<div class="dia">{{journal.day}}</div>
 							<div class="comienzo">
 								<input class="js-time" type="time" v-model="journal.start" :name="`start${journal.start}`" :id="`start${journal.start}`" required>
@@ -28,7 +23,20 @@
 							</div>
 						</div>
 					</div>
-					<button class="btn btn--see" id="save-journal" type="button" @click="saveJournal()">Guardar</button>
+					<button class="btn btn--see" type="button" @click="saveJournal()">Guardar</button>
+				</main>
+			</article>
+
+			<article class="card">
+				<header class="card__header">
+					<h3>Usuario</h3>
+				</header>
+				<main class="card__body">
+					<div class="form-control">
+						<h4>Cambiar contraseña</h4>
+						<input type="text" v-model="password">
+					</div>
+					<button class="btn btn--see" type="button" @click="changePassword()">Guardar</button>
 				</main>
 			</article>
 		</div>
@@ -41,7 +49,8 @@ import axios from 'axios'
 export default {
 	data() {
 		return {
-			journals: []
+			journals: [],
+			password: ""
 		}
 	},
 
@@ -63,8 +72,23 @@ export default {
 				await axios.post('/config', this.journals);
       } catch (error) {
         console.log('error al enviar POST para iniciar tiempo de trabajo: >> ', error);
-      }
+			}
+		},
+		changePassword () {
+			console.log('click change password', this.password);
 		}
 	}
 }
 </script>
+
+<style lang="scss">
+	.config {
+		.cards {
+			.card {
+				@media (min-width: 978px) {
+					width: 48%;
+				}
+			}
+		}
+	}
+</style>

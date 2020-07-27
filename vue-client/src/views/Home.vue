@@ -28,7 +28,7 @@
           <h3>Configuración</h3>
         </header>
         <main class="card__body">
-          <p>Accede a tu panel de control para configurar alertas, tu jornada laboral por días, horarios de entrada y salidas, descargas...</p>
+          <p>Accede a tu panel de control para configurar alertas, tu jornada laboral por días, horarios de entrada y salidas</p>
         </main>
         <footer class="card__footer">
           <router-link class="btn btn--see" to="/config">Ir a configuración</router-link>
@@ -39,7 +39,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'Home',
   components: {

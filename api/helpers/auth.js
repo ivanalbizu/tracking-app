@@ -27,8 +27,6 @@ const auth = (req, res, next) => {
     return res.sendStatus(403)
   }
   next();
-
-
 }
 
 module.exports = {

@@ -4,7 +4,7 @@
 		<div class="cards">
 			<article class="card">
 				<header class="card__header">
-					<h3>Jornada laboral</h3>
+					<h3 class="title-card">Jornada laboral</h3>
 				</header>
 				<main class="card__body">
 					<div class="form-control">
@@ -29,14 +29,31 @@
 
 			<article class="card">
 				<header class="card__header">
-					<h3>Usuario</h3>
+					<h3 class="title-card">Usuario</h3>
 				</header>
 				<main class="card__body">
 					<div class="form-control">
-						<h4>Cambiar contraseña</h4>
-						<input type="text" v-model="password">
+						<h4 class="subtitle-card">Cambiar contraseña</h4>
+						<div class="form-control">
+							<label class="label">
+								Contraseña actual
+								<input class="input" type="text" v-model="password.old_password">
+							</label>
+						</div>
+						<div class="form-control">
+							<label class="label">
+								Nueva contraseña
+								<input class="input" type="text" v-model="password.new_password">
+							</label>
+						</div>
+						<div class="form-control">
+							<label class="label">
+								Confirmar contraseña
+								<input class="input" type="text" v-model="password.new_password_confirm">
+							</label>
+						</div>
 					</div>
-					<button class="btn btn--see" type="button" @click="changePassword()">Guardar</button>
+					<button class="btn btn--see" type="button" @click="changePassword()">Cambiar contraseña</button>
 				</main>
 			</article>
 		</div>
@@ -45,12 +62,17 @@
 
 <script>
 import axios from 'axios'
+import { mapActions} from 'vuex'
 
 export default {
 	data() {
 		return {
 			journals: [],
-			password: ""
+			password: {
+				old_password: "",
+				new_password: "",
+				new_password_confirm: ""
+			}
 		}
 	},
 
@@ -59,6 +81,10 @@ export default {
 	},
 
 	methods: {
+		...mapActions({
+      signOutAction: 'auth/signOut'
+		}),
+		
 		async listarJournal () {
       try {
 				const result = await axios.get('/config');
@@ -74,8 +100,21 @@ export default {
         console.log('error al enviar POST para iniciar tiempo de trabajo: >> ', error);
 			}
 		},
-		changePassword () {
-			console.log('click change password', this.password);
+		async changePassword () {
+			if (this.password.new_password !== this.password.new_password_confirm) {
+				return alert('Contraseña nueva y su confirmación no coinciden')
+			}
+			try {
+				const result = await axios.post('/config/reset-password', this.password);
+				if (!result.data.success) {
+					return alert('La contraseña introducida no es correcta')
+				}
+				this.signOutAction().then(() => {
+					if (this.$route.name !== 'signin') this.$router.push("/signin");
+				})
+			} catch (error) {
+				console.log('error al enviar POST para iniciar tiempo de trabajo: >> ', error);
+			}
 		}
 	}
 }

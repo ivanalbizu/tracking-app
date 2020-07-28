@@ -4,6 +4,9 @@ const fspromises = require('../helpers/fspromises');
 const request = require('../helpers/request');
 const { auth } = require('../helpers/auth');
 
+const User = require('../models/userModel')
+const bcrypt = require('bcryptjs')
+
 router.get('/', auth, async (req, res) => {
   try {
     const { data } = await request.getData(req, res);
@@ -31,8 +34,29 @@ router.post('/', auth, async (req, res) => {
 
 router.post('/reset-password', auth, async (req, res) => {
   try {
-    console.log(req.body);
-    res.json('data')
+    console.log("a ver que llegaaaaa ", req.body);
+    const userDB = await User.findOne({ email: req.user.email })
+		if(!userDB) {
+			return res.json({ 
+				success: false,
+				error: 'Usuario incorrecto'
+			})
+    }
+    const match = await bcrypt.compare(req.body.old_password, userDB.password)
+    console.log('match :>> ', match);
+		if(!match) {
+			return res.json({ 
+				success: false,
+				error: 'Contraseña no coincidentes'
+			})
+    }
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(req.body.new_password, salt);
+    await User.findOneAndUpdate({ email: req.user.email }, { password:hash })
+    console.log('userDB :>> ', userDB);
+    res.json({ 
+      success: true
+    })
   } catch(error) {
     console.log('error reset password :>> ', error)
   }

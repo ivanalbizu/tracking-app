@@ -67,6 +67,10 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+      .main {
+        background-color: #fff;
+        box-shadow: 0 0 0 1px var(--color-orange);
+      }
     }
   }
 </style>

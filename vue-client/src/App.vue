@@ -67,6 +67,7 @@ export default {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  line-height: 1.6;
 }
 h1,h2,h3,h4,h5,h6 {
   font-weight: 400;
@@ -106,12 +107,13 @@ body {
 }
 
 .form-control {
-  margin-bottom: 20px;
+  margin-bottom: 1em;
 }
 .label {
   display: inline-block;
-  margin-bottom: 4px;
+  margin-bottom: .3em;
   font-weight: 300;
+  width: 100%;
 }
 button {
   cursor: pointer;
@@ -138,7 +140,7 @@ input, button {
 }
 .input {
   font-size: 16px;
-  border: 1px solid rgba(#202121,.3);
+  border: 1px solid var(--color-orange);
 }
 .btn {
   font-size: 14px;
@@ -161,7 +163,7 @@ input, button {
   &--see {
     display: inline-flex;
     justify-content: center;
-    width: 188px;
+    width: 210px;
     max-width: 100%;
     border-radius: 0;
     border-top: 3px solid var(--color-orange);
@@ -200,6 +202,17 @@ input, button {
   font-weight: 400;
   margin-bottom: 30px;
 }
+.title-card {
+  font-size: 1.5em;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+.subtitle-card {
+  font-size: 1.2em;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
 .wrapper {
   display: grid;
   grid-template-columns: 80px 1fr;
@@ -350,10 +363,10 @@ li[data-end] .time-end {
     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
     border-top: 4px solid var(--color-orange);
     &__header {
-      margin-bottom: 30px;
+      margin-bottom: 1em;
     }
     &__body {
-      margin-bottom: 30px;
+      margin-bottom: 1em;
     }
     &__footer {
       margin-top: auto;

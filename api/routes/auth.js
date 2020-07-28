@@ -19,7 +19,7 @@ const signin = async (req, res) => {
 				success: false,
 				error: 'Usuario incorrecto'
 			})
-		} 
+		}
 
 		const match = await bcrypt.compare(password, userDB.password)
 		if(!match) {

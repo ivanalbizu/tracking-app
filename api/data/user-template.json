@@ -2,10 +2,7 @@
   "id": 1,
   "name": "Iván González Albizu",
   "email": "ivan.albizu@gemail.com",
-  "role": [
-    "ADMIN",
-    "USER"
-  ],
+  "role": "ADMIN",
   "config": {
     "journal": {
       "1": {

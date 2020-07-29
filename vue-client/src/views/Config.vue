@@ -29,11 +29,10 @@
 
 			<article class="card">
 				<header class="card__header">
-					<h3 class="title-card">Usuario</h3>
+					<h3 class="title-card">Cambiar contraseña</h3>
 				</header>
 				<main class="card__body">
 					<div class="form-control">
-						<h4 class="subtitle-card">Cambiar contraseña</h4>
 						<div class="form-control">
 							<label class="label">
 								Contraseña actual
@@ -56,13 +55,51 @@
 					<button class="btn btn--see" type="button" @click="changePassword()">Cambiar contraseña</button>
 				</main>
 			</article>
+
+			<article class="card" v-if="user.role=='ADMIN'">
+				<header class="card__header">
+					<h3 class="title-card">Crear usuario</h3>
+				</header>
+				<main class="card__body">
+					<div class="form-control">
+						<div class="form-control">
+							<label class="label">
+								Nombre
+								<input class="input" type="text" v-model="userCreate.name">
+							</label>
+						</div>
+						<div class="form-control">
+							<label class="label">
+								Email
+								<input class="input" type="text" v-model="userCreate.email">
+							</label>
+						</div>
+						<div class="form-control">
+							<label class="label">
+								Contraseña
+								<input class="input" type="text" v-model="userCreate.password">
+							</label>
+						</div>
+						<div class="form-control">
+							<label class="label">
+								Role
+								<select v-model="userCreate.role">
+									<option value="USER">User</option>
+									<option value="ADMIN">Admin</option>
+								</select>
+							</label>
+						</div>
+					</div>
+					<button class="btn btn--see" type="button" @click="createUser()">Crear usuario</button>
+				</main>
+			</article>
 		</div>
   </section>
 </template>
 
 <script>
 import axios from 'axios'
-import { mapActions} from 'vuex'
+import { mapActions, mapGetters} from 'vuex'
 
 export default {
 	data() {
@@ -72,8 +109,20 @@ export default {
 				old_password: "",
 				new_password: "",
 				new_password_confirm: ""
+			},
+			userCreate: {
+				email: "",
+				password: "",
+				name: "",
+				role: "USER"
 			}
 		}
+	},
+
+  computed: {
+    ...mapGetters({
+      user: 'auth/user'
+    })
 	},
 
 	created() {
@@ -100,6 +149,7 @@ export default {
         console.log('error al enviar POST para iniciar tiempo de trabajo: >> ', error);
 			}
 		},
+
 		async changePassword () {
 			if (this.password.new_password !== this.password.new_password_confirm) {
 				return alert('Contraseña nueva y su confirmación no coinciden')
@@ -112,6 +162,23 @@ export default {
 				this.signOutAction().then(() => {
 					if (this.$route.name !== 'signin') this.$router.push("/signin");
 				})
+			} catch (error) {
+				console.log('error al enviar POST para iniciar tiempo de trabajo: >> ', error);
+			}
+		},
+
+		async createUser () {
+			try {
+				const result = await axios.post('/config/create-user', this.userCreate);
+				if (!result.data.success) {
+					alert(result.data.message)
+				}
+				this.userCreate = {
+					email: "",
+					password: "",
+					name: "",
+					role: ""
+				}
 			} catch (error) {
 				console.log('error al enviar POST para iniciar tiempo de trabajo: >> ', error);
 			}

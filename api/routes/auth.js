@@ -38,12 +38,12 @@ const signin = async (req, res) => {
 				email: userDB.email,
 				name: userDB.name
 			}
-		};
+		}
 		const token = jwt.sign(payload, jwtKey, tokenOptions)
 
 		res.json({
       token,
-      email
+			email
     })
 
 	} catch (error) {
@@ -56,7 +56,8 @@ const me = async (req, res) => {
 		const user = await User.findOne({ email: req.user.email })
 		res.json({
 			'name': user.name,
-			'email': user.email
+			'email': user.email,
+			'role': user.role
 		})
   } catch (e) {
     res.json({ message: "Error in Fetching user" });

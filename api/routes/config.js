@@ -37,16 +37,16 @@ router.post('/reset-password', auth, async (req, res) => {
     console.log("a ver que llegaaaaa ", req.body);
     const userDB = await User.findOne({ email: req.user.email })
 		if(!userDB) {
-			return res.json({ 
-				success: false,
+      return res.json({ 
+        success: false,
 				error: 'Usuario incorrecto'
 			})
     }
     const match = await bcrypt.compare(req.body.old_password, userDB.password)
     console.log('match :>> ', match);
 		if(!match) {
-			return res.json({ 
-				success: false,
+      return res.json({ 
+        success: false,
 				error: 'Contraseña no coincidentes'
 			})
     }
@@ -60,6 +60,42 @@ router.post('/reset-password', auth, async (req, res) => {
   } catch(error) {
     console.log('error reset password :>> ', error)
   }
+})
+var fs = require('fs');
+router.post('/create-user', auth, async (req, res) => {
+  console.log(req.body);
+  const dir = `./data/${req.body.email}`;
+
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(req.body.password, salt);
+    const newUser = new User({
+      'email': req.body.email,
+      'password': hash,
+      'name': req.body.name,
+      'role': req.body.role
+    });
+    const read = await fspromises.readPromise(`./data/user-template.json`)
+    const data = await JSON.parse(read)
+    const saveUser = await newUser.save();
+    data.id = saveUser._id
+    data.email = saveUser.email
+    data.name = saveUser.name
+    data.role = saveUser.role
+    await fspromises.writePromise(`./data/${req.body.email}/user-template.json`, JSON.stringify(data, null, 2))
+    console.log(saveUser);
+  } else {
+    console.log('Ya existe el usuario');
+    return res.json({ 
+      success: false,
+      message: 'Ya existe el usuario'
+    })
+  }
+  res.json({ 
+    success: true,
+    message: 'Usuario creado'
+  })
 })
 
 module.exports = router;

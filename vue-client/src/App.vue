@@ -207,11 +207,6 @@ input, button {
   font-weight: 400;
   margin-bottom: 10px;
 }
-.subtitle-card {
-  font-size: 1.2em;
-  font-weight: 400;
-  margin-bottom: 10px;
-}
 
 .wrapper {
   display: grid;

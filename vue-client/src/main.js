@@ -4,7 +4,12 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import VueSocketIO from 'vue-socket.io'
-//import SocketIO from 'socket.io-client'
+import Toasted from 'vue-toasted';
+
+Vue.use(Toasted, {
+  duration: 5000,
+  position: 'bottom-right'
+})
 
 require('@/store/subscriber')
 

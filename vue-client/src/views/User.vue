@@ -106,6 +106,9 @@ export default {
       try {
         const result = await axios.post('/user/start', data);
         this.tracks = result.data;
+        this.$toasted.show('Inicio de trabajo', {
+					type : 'info'
+				})
       } catch (error) {
         console.log('error al enviar POST para comenzar la grabación del día: >> ', error);
       }
@@ -119,6 +122,9 @@ export default {
       try {
         const result = await axios.post('/user/play', data);
         this.tracks = result.data;
+        this.$toasted.show('Inicio de trabajo', {
+					type : 'info'
+				})
       } catch (error) {
         console.log('error al enviar POST para iniciar tiempo de trabajo: >> ', error);
       }
@@ -132,6 +138,9 @@ export default {
       try {
         const result = await axios.post('/user/pause', data);
         this.tracks = result.data;
+        this.$toasted.show('Inicio de pausa', {
+					type : 'info'
+				})
       } catch (error) {
         console.log('error al enviar POST para iniciar tiempo de trabajo: >> ', error);
       }
@@ -145,6 +154,9 @@ export default {
       try {
         const result = await axios.post('/user/stop', data);
         this.tracks = result.data;
+        this.$toasted.show('Actualizada la hora', {
+					type : 'info'
+				})
       } catch (error) {
         console.log('error al enviar POST para iniciar tiempo de trabajo: >> ', error);
       }

@@ -273,7 +273,8 @@ input, button {
     &:focus {
       outline: none;
     }
-    &:hover {
+    &:hover,
+    &:focus {
       svg {
         transition: stroke .3 ease;
         stroke: var(--color-orange);

@@ -139,27 +139,39 @@ export default {
 				const result = await axios.get('/config');
 				this.journals = result.data;
       } catch (error) {
-        console.log('error GET track del día: >> ', error);
+				console.log('error GET track del día: >> ', error);
       }
 		},
 		async saveJournal () {
-      try {
-				await axios.post('/config', this.journals);
+			try {
+				const result = await axios.post('/config', this.journals);
+				this.$toasted.show(result.data.message, {
+					type : 'success'
+				})
       } catch (error) {
-        console.log('error al enviar POST para iniciar tiempo de trabajo: >> ', error);
+        console.log('error al enviar POST para actualizar jornada laboral: >> ', error);
 			}
 		},
 
 		async changePassword () {
 			if (this.password.new_password !== this.password.new_password_confirm) {
-				return alert('Contraseña nueva y su confirmación no coinciden')
+				//Confirmación de contraseña incorrecta
+				return this.$toasted.show('Confirmación de contraseña incorrecta', {
+					type : 'error'
+				})
 			}
 			try {
 				const result = await axios.post('/config/reset-password', this.password);
 				if (!result.data.success) {
-					return alert('La contraseña introducida no es correcta')
+					//La contraseña actual no es correcta
+					return this.$toasted.show(result.data.message, {
+						type : 'error'
+					})
 				}
 				this.signOutAction().then(() => {
+					this.$toasted.show('Contraseña cambiada correctamente', {
+						type : 'success'
+					})
 					if (this.$route.name !== 'signin') this.$router.push("/signin");
 				})
 			} catch (error) {
@@ -171,14 +183,19 @@ export default {
 			try {
 				const result = await axios.post('/config/create-user', this.userCreate);
 				if (!result.data.success) {
-					alert(result.data.message)
+					return this.$toasted.show(result.data.message, {
+						type : 'error'
+					})
 				}
 				this.userCreate = {
 					email: "",
 					password: "",
 					name: "",
-					role: ""
+					role: "USER"
 				}
+				this.$toasted.show(result.data.message, {
+					type : 'success'
+				})
 			} catch (error) {
 				console.log('error al enviar POST para iniciar tiempo de trabajo: >> ', error);
 			}

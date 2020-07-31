@@ -61,13 +61,12 @@ router.post('/reset-password', auth, async (req, res) => {
     console.log('error reset password :>> ', error)
   }
 })
-var fs = require('fs');
+
 router.post('/create-user', auth, async (req, res) => {
   console.log(req.body);
   const dir = `./data/${req.body.email}`;
 
-  if (!fs.existsSync(dir)){
-    fs.mkdirSync(dir);
+  if (fspromises.createDir(dir)){
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
     const newUser = new User({
@@ -82,7 +81,7 @@ router.post('/create-user', auth, async (req, res) => {
     data.id = saveUser._id
     data.email = saveUser.email
     data.name = saveUser.name
-    data.role = saveUser.role
+    data.role = "USER"
     await fspromises.writePromise(`./data/${req.body.email}/user-template.json`, JSON.stringify(data, null, 2))
     console.log(saveUser);
   } else {

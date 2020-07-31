@@ -31,6 +31,15 @@ const checkFileExists = file => {
   });
 }
 
+const createDir = dir => {
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+    return true;
+  } else {
+    return false;
+  }
+}
+
 async function files(path) {
   const filesArr = [];
   const files = await fs.promises.readdir(path);
@@ -46,5 +55,6 @@ module.exports = {
   checkFileExists,
   readPromise,
   writePromise,
+  createDir,
   files
 }

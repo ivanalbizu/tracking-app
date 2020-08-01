@@ -50,7 +50,8 @@ export default {
       tracks: [],
       date: "",
       status: {},
-      notifyID: null
+      notifyID: null,
+      notifyTimeOut: 60000
     }
   },
 
@@ -131,7 +132,7 @@ export default {
     },
 
     async pause () {
-      this.notifyID = this.notifyCreate(7000)
+      this.notifyID = this.notifyCreate(this.notifyTimeOut)
 
       this.status = { start: false, play: true, pause: false, stop: true };
       const data = this._request();
@@ -198,7 +199,7 @@ export default {
       const title = 'Tarea en pausa';
       const options = {
         icon: 'https://via.placeholder.com/512x512',
-        body: `La tarea está en pausa por XX tiempo`
+        body: `La pausa ha llegado a ${this.notifyTimeOut/60000} minutos`
       };
   
       notifyID = window.setTimeout(() => {
@@ -227,3 +228,20 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.current-work-day {
+  [data-type] {
+    margin-bottom: 20px;
+    border-left: 3px solid;
+    background-color: #fff;
+    padding: 5px 15px;
+  }
+  [data-type="work"] {
+    border-color: var(--color-orange);
+  }
+  [data-type="break"] {
+    border-color: var(--color-blue-dark);
+  }
+}
+</style>

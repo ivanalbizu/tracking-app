@@ -20,3 +20,52 @@
     </nav>
   </aside>
 </template>
+
+<style lang="scss">
+.aside {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  border-right: 1px solid #ccc;
+  box-shadow: 0px 3px 3px rgba(0,0,0,.2);
+  position: sticky;
+  top: -1px;
+  z-index: 1;
+  .nav {
+    position: sticky;
+    top: -1px;
+  }
+}
+.nav {
+  width: 100%;
+  &__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+    border-bottom: 1px solid #ddd;
+    border-left: 3px solid transparent;
+    &.router-link-exact-active {
+      svg {
+        stroke: var(--color-orange);
+      }
+      border-left: 3px solid var(--color-orange);
+    }
+    &:focus {
+      outline: none;
+    }
+    &:hover,
+    &:focus {
+      svg {
+        transition: stroke .3s ease;
+        stroke: var(--color-orange);
+      }
+    }
+    svg {
+      transition: stroke .2s ease;
+    }
+  }
+}
+</style>

@@ -204,13 +204,22 @@ export default {
 </script>
 
 <style lang="scss">
-	.config {
-		.cards {
-			.card {
-				@media (min-width: 978px) {
-					width: 48%;
-				}
+.planning {
+  &-time {
+    display: flex;
+    justify-content: space-between;
+    .dia {
+      width: 100px;
+    }
+  }
+}
+.config {
+	.cards {
+		.card {
+			@media (min-width: 978px) {
+				width: 48%;
 			}
 		}
 	}
+}
 </style>

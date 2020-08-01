@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="signin">
 		<img class="logo" src="@/assets/logo.svg" alt="Logo" />
     <form @submit.prevent="submit">
       <div class="form-control">
@@ -57,20 +57,36 @@ export default {
 </script>
 
 <style lang="scss">
-  .signin {
-    .ham,
-    .header,
-    .aside {
-      display: none;
-    }
-    .wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .main {
-        background-color: #fff;
-        box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
-      }
+.signin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .logo {
+    width: 200px;
+    padding: 0 10px 10px;
+  }
+  &-form {
+    width: 360px;
+    max-width: 98%;
+    margin: auto;
+    background-color: #fff;
+    padding: 30px 25px;
+    box-shadow: 0 0 5px rgba(0,0,0,.1);
+    border-radius: 3px;
+  }
+  .ham,
+  .header,
+  .aside {
+    display: none;
+  }
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .main {
+      background-color: #fff;
+      box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
     }
   }
+}
 </style>

@@ -172,7 +172,6 @@ export default {
 					this.$toasted.show('Contraseña cambiada correctamente', {
 						type : 'success'
 					})
-					if (this.$route.name !== 'signin') this.$router.push("/signin");
 				})
 			} catch (error) {
 				console.log('error al enviar POST para iniciar tiempo de trabajo: >> ', error);

@@ -1,22 +1,22 @@
 <template>
   <section class="details">
     <ul
-      v-for="(item, index) in tracks" :key="index"
+      v-for="(track, index) in tracks" :key="index"
       class="date"
       :data-date="index"
-      :data-total="totalDayTime(item[0].time_start, item[item.length-1].time_end)"
-      :data-start="item[0].time_start"
-      :data-end="item[item.length-1].time_end">
+      :data-total="totalDayTime(track[0].time_start, track[track.length-1].time_end)"
+      :data-start="track[0].time_start"
+      :data-end="track[track.length-1].time_end">
       <li
         class="date-bar">
         <span class="date-bar-title">{{index}}</span>
         <ul class="date-track">
           <li
-            v-for="(day, index) in item" :key="index"
+            v-for="(day, index) in track" :key="index"
             :data-type="day.type"
             :data-start="day.time_start"
             :data-end="day.time_end"
-            :style="widthBar(totalDayTime(item[0].time_start, item[item.length-1].time_end), day.time_start, day.time_end)">
+            :style="widthBar(totalDayTime(track[0].time_start, track[track.length-1].time_end), day.time_start, day.time_end)">
             <span class="time-start">{{day.time_start}}</span>
             <span class="time-end">{{day.time_end}}</span>
           </li>

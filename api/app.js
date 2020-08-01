@@ -37,7 +37,7 @@ const history = require('connect-history-api-fallback');
 app.use(history());
 
 app.use(express.static(path.join(__dirname + '/public')))
-//app.use(unless(auth, "/signin"))
+app.use(unless(auth, "/signin"))
 
 const server = app.listen(port, () => console.log(`Listening on ${port}`))
 

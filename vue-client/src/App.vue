@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <button class="ham" type="button">
+    <button class="ham btn btn--ham" type="button" @click="ham">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="#212121" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
     </button>
     <TheHeader />
@@ -49,11 +49,14 @@ export default {
       if (store.getters['auth/user']?.email) {
         this.$socket.emit('user_pause', store.getters['auth/user'].email)
       }
+    },
+
+    ham() {
+      event.target.closest('.wrapper').classList.toggle('ham--full')
     }
   }
 }
 </script>
-
 <style lang="scss">
 :root {
   --color-orange: #DD6E42;
@@ -63,11 +66,46 @@ export default {
   --color-gray-dark: #EAEAEA;
   --color-gray-light: #f4f7f6;
 }
+.menu-txt {
+  display: none;
+}
+@media (min-width: 767.02px) {
+  .wrapper {
+    &.ham--full {
+      grid-template-columns: 180px 1fr;
+      .nav__item {
+        justify-content: flex-start;
+        padding: 1em;
+        .menu-txt {
+          color: #000;
+          display: flex;
+          padding: 1em;
+          text-transform: uppercase;
+          transition: color .15s ease-in-out;;
+        }
+        &:hover,
+        &:focus {
+          .menu-txt {
+            color: var(--color-orange);
+            transition: color .15s ease-in-out;;
+          }
+        }
+        &.router-link-exact-active {
+          .menu-txt {
+            color: var(--color-orange);
+          }
+        }
+      }
+    }
+  }
+}
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   line-height: 1.6;
+  margin-block-start: 0;
+  margin-block-end: 0;
 }
 h1,h2,h3,h4,h5,h6 {
   font-weight: 400;
@@ -160,6 +198,25 @@ input, button {
       stroke: var(--color-orange);
     }
   }
+  &--signout {
+    display: flex;
+    border: 0;
+    &:hover,
+    &:focus {
+      svg {
+        stroke: var(--color-orange);
+      }
+    }
+  }
+  &--ham {
+    border-color:#ddd;
+    &:hover,
+    &:focus {
+      svg {
+        stroke: var(--color-orange);
+      }
+    }
+  }
   &--see {
     display: inline-flex;
     justify-content: center;
@@ -169,7 +226,8 @@ input, button {
     border-top: 3px solid var(--color-orange);
     color: var(--color-orange);
     transition: border .15s ease-in-out, background-color .15s ease-in-out, color .15s ease-in-out;
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: var(--color-orange);
       color: #fff;
       transition: border .15s ease-in-out, background-color .15s ease-in-out, color .15s ease-in-out;
@@ -276,7 +334,7 @@ input, button {
     &:hover,
     &:focus {
       svg {
-        transition: stroke .3 ease;
+        transition: stroke .3s ease;
         stroke: var(--color-orange);
       }
     }

@@ -33,9 +33,9 @@ Vue.use(VueRouter)
     }
   },
   {
-    path: '/user',
-    name: 'user',
-    component: () => import(/* webpackChunkName: "user" */ '../views/User.vue'),
+    path: '/track',
+    name: 'track',
+    component: () => import(/* webpackChunkName: "track" */ '../views/Track.vue'),
     meta: {
       requiresAuth: true,
       title: 'Tracking Page - Tracker App',

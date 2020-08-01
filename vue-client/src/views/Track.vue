@@ -87,7 +87,7 @@ export default {
     async listarTracks () {
       //const data = this._request();
       try {
-        const result = await axios.get(`/user`);
+        const result = await axios.get(`/track`);
         if (!result.status === 200) {
           this.$router.push('/login');
         }
@@ -104,7 +104,7 @@ export default {
       this.status = { start: false, play: false, pause: true, stop: true };
       const data = this._request();
       try {
-        const result = await axios.post('/user/start', data);
+        const result = await axios.post('/track/start', data);
         this.tracks = result.data;
         this.$toasted.show('Inicio de trabajo', {
 					type : 'info'
@@ -120,7 +120,7 @@ export default {
       this.status = { start: false, play: false, pause: true, stop: true };
       const data = this._request();
       try {
-        const result = await axios.post('/user/play', data);
+        const result = await axios.post('/track/play', data);
         this.tracks = result.data;
         this.$toasted.show('Inicio de trabajo', {
 					type : 'info'
@@ -136,7 +136,7 @@ export default {
       this.status = { start: false, play: true, pause: false, stop: true };
       const data = this._request();
       try {
-        const result = await axios.post('/user/pause', data);
+        const result = await axios.post('/track/pause', data);
         this.tracks = result.data;
         this.$toasted.show('Inicio de pausa', {
 					type : 'info'
@@ -152,7 +152,7 @@ export default {
 
       const data = this._request();
       try {
-        const result = await axios.post('/user/stop', data);
+        const result = await axios.post('/track/stop', data);
         this.tracks = result.data;
         this.$toasted.show('Actualizada la hora', {
 					type : 'info'
@@ -205,7 +205,7 @@ export default {
         const notification = new Notification(title, options);
         notification.onclick = function(event) {
           event.preventDefault();
-          window.open('http://localhost:8080/user', '_blank');
+          window.open('http://localhost:8080/track', '_blank');
         }
         this.notifyID = null;
       }, timeout);

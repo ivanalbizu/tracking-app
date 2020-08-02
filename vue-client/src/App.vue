@@ -58,6 +58,7 @@ export default {
   }
 }
 </script>
+
 <style lang="scss">
 :root {
   --color-orange: #DD6E42;

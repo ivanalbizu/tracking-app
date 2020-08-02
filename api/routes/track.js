@@ -7,7 +7,7 @@ const { auth } = require('../helpers/auth');
 router.get('/', auth, async (req, res) => {
   try {
     const { data, today, file } = await request.getDataTrack(req, res);
-    res.json(data.tracking[today])
+    res.json(data)
   } catch(error) {
     console.log('error start :>> ', error)
   }

@@ -162,8 +162,9 @@ export default {
 
 		async saveNotifyTime () {
 			try {
-				console.log('this.notifyTimeOut :>> ', typeof this.notifyTimeOut);
-				const result = await axios.post('/config/notify-time', {"notifyTimeOut":this.notifyTimeOut*60000});
+				const timeOut = this.notifyTimeOut*60000;
+				const result = await axios.post('/config/notify-time', {"notifyTimeOut":timeOut});
+				this.$store.commit('SET_NOTIFICATION', timeOut)
 				this.$toasted.show(result.data.message, {
 					type : 'success'
 				})

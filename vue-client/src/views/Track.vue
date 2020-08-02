@@ -51,7 +51,7 @@ export default {
       date: "",
       status: {},
       notifyID: null,
-      notifyTimeOut: 60000
+      notifyTimeOut: null
     }
   },
 
@@ -86,16 +86,16 @@ export default {
     },
 
     async listarTracks () {
-      //const data = this._request();
       try {
         const result = await axios.get(`/track`);
         if (!result.status === 200) {
           this.$router.push('/login');
         }
-        this.statusHandler(result.data);
-        if (result.data) {
-          this.tracks = result.data;
+        this.statusHandler(result.data.tracking[this.date]);
+        if (result.data.tracking[this.date]) {
+          this.tracks = result.data.tracking[this.date];
         }
+        store.commit('SET_NOTIFICATION', result.data.config.notifyTimeOut)
       } catch (error) {
         console.log('error GET track del día: >> ', error);
       }
@@ -132,7 +132,9 @@ export default {
     },
 
     async pause () {
-      this.notifyID = this.notifyCreate(this.notifyTimeOut)
+      if (store.getters['auth/user']?.email && store.getters['notification']) {
+        this.notifyID = this.notifyCreate(store.getters['notification'])
+      }
 
       this.status = { start: false, play: true, pause: false, stop: true };
       const data = this._request();
@@ -199,7 +201,7 @@ export default {
       const title = 'Tarea en pausa';
       const options = {
         icon: 'https://via.placeholder.com/512x512',
-        body: `La pausa ha llegado a ${this.notifyTimeOut/60000} minutos`
+        body: `La pausa ha llegado a ${store.getters['notification']/60000} minutos`
       };
   
       notifyID = window.setTimeout(() => {

@@ -51,9 +51,10 @@ export default {
       }
     },
 
-    ham() {
+    ham () {
       event.target.closest('.wrapper').classList.toggle('ham--full')
     }
+
   }
 }
 </script>
@@ -128,7 +129,6 @@ body {
   min-height: 100vh;
 }
 
-
 .form-control {
   margin-bottom: 1em;
 }
@@ -137,6 +137,10 @@ body {
   margin-bottom: .3em;
   font-weight: 300;
   width: 100%;
+  > span {
+    margin-bottom: inherit;
+    display: block;
+  }
 }
 button {
   cursor: pointer;

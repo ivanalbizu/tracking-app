@@ -30,7 +30,8 @@
         "start": "09:00",
         "end": "15:00"
       }
-    }
+    },
+    "notifyTimeOut": 60000
   },
   "tracking": {}
 }

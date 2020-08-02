@@ -29,25 +29,40 @@
 
 			<article class="card">
 				<header class="card__header">
+					<h3 class="title-card">Notificaciones</h3>
+				</header>
+				<main class="card__body">
+					<div class="form-control">
+						<label class="label">
+							<span>Notificar por tiempo en pausa (minutos)</span>
+							<input class="input" type="number" min="1" max="480" v-model="notifyTimeOut">
+						</label>
+					</div>
+					<button class="btn btn--see" type="button" @click="saveNotifyTime()">Guardar</button>
+				</main>
+			</article>
+
+			<article class="card">
+				<header class="card__header">
 					<h3 class="title-card">Cambiar contraseña</h3>
 				</header>
 				<main class="card__body">
 					<div class="form-control">
 						<div class="form-control">
 							<label class="label">
-								Contraseña actual
+								<span>Contraseña actual</span>
 								<input class="input" type="text" v-model="password.old_password">
 							</label>
 						</div>
 						<div class="form-control">
 							<label class="label">
-								Nueva contraseña
+								<span>Nueva contraseña</span>
 								<input class="input" type="text" v-model="password.new_password">
 							</label>
 						</div>
 						<div class="form-control">
 							<label class="label">
-								Confirmar contraseña
+								<span>Confirmar contraseña</span>
 								<input class="input" type="text" v-model="password.new_password_confirm">
 							</label>
 						</div>
@@ -64,19 +79,19 @@
 					<div class="form-control">
 						<div class="form-control">
 							<label class="label">
-								Nombre
+								<span>Nombre</span>
 								<input class="input" type="text" v-model="userCreate.name">
 							</label>
 						</div>
 						<div class="form-control">
 							<label class="label">
-								Email
+								<span>Email</span>
 								<input class="input" type="text" v-model="userCreate.email">
 							</label>
 						</div>
 						<div class="form-control">
 							<label class="label">
-								Contraseña
+								<span>Contraseña</span>
 								<input class="input" type="text" v-model="userCreate.password">
 							</label>
 						</div>
@@ -105,6 +120,7 @@ export default {
 	data() {
 		return {
 			journals: [],
+			notifyTimeOut: 0,
 			password: {
 				old_password: "",
 				new_password: "",
@@ -137,11 +153,25 @@ export default {
 		async listarJournal () {
       try {
 				const result = await axios.get('/config');
-				this.journals = result.data;
+				this.journals = result.data.config.journal;
+				this.notifyTimeOut = Math.floor(result.data.config.notifyTimeOut / 60000);
       } catch (error) {
 				console.log('error GET track del día: >> ', error);
       }
 		},
+
+		async saveNotifyTime () {
+			try {
+				console.log('this.notifyTimeOut :>> ', typeof this.notifyTimeOut);
+				const result = await axios.post('/config/notify-time', {"notifyTimeOut":this.notifyTimeOut*60000});
+				this.$toasted.show(result.data.message, {
+					type : 'success'
+				})
+      } catch (error) {
+        console.log('error al enviar POST para actualizar jornada laboral: >> ', error);
+			}
+		},
+
 		async saveJournal () {
 			try {
 				const result = await axios.post('/config', this.journals);

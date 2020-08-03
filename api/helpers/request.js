@@ -18,7 +18,7 @@ const getData = async (req, res) => {
     const data = await JSON.parse(read);
     return { data, today, file };
   } catch (error) {
-    console.log('Error al obtener los datos de usuario : ', error);
+    console.log('Error al obtener los datos de usuario (getData) : ', error);
     throw (error)
   }
 }
@@ -39,7 +39,7 @@ const getDataTrack = async (req, res) => {
     }
     return { data, today, file };
   } catch (error) {
-    console.log('Error al obtener los datos de usuario : ', error);
+    console.log('Error al obtener los datos de usuario (getDataTrack) : ', error);
     throw (error)
   }
 }

@@ -9,7 +9,7 @@ const getData = async (email) => {
     const data = await JSON.parse(read);
     return { data, today, file };
   } catch (error) {
-    console.log('Error al obtener los datos de usuario : ', error);
+    console.log('Error al obtener los datos de usuario (socket) : ', error);
     throw (error)
   }
 }

@@ -71,43 +71,45 @@
 				</main>
 			</article>
 
-			<article class="card" v-if="user.role=='ADMIN'">
-				<header class="card__header">
-					<h3 class="title-card">Crear usuario</h3>
-				</header>
-				<main class="card__body">
-					<div class="form-control">
+			<template v-if="user">
+				<article class="card" v-if="user.role=='ADMIN'">
+					<header class="card__header">
+						<h3 class="title-card">Crear usuario</h3>
+					</header>
+					<main class="card__body">
 						<div class="form-control">
-							<label class="label">
-								<span>Nombre</span>
-								<input class="input" type="text" v-model="userCreate.name">
-							</label>
+							<div class="form-control">
+								<label class="label">
+									<span>Nombre</span>
+									<input class="input" type="text" v-model="userCreate.name">
+								</label>
+							</div>
+							<div class="form-control">
+								<label class="label">
+									<span>Email</span>
+									<input class="input" type="text" v-model="userCreate.email">
+								</label>
+							</div>
+							<div class="form-control">
+								<label class="label">
+									<span>Contraseña</span>
+									<input class="input" type="text" v-model="userCreate.password">
+								</label>
+							</div>
+							<div class="form-control">
+								<label class="label">
+									Role
+									<select v-model="userCreate.role">
+										<option value="USER">User</option>
+										<option value="ADMIN">Admin</option>
+									</select>
+								</label>
+							</div>
 						</div>
-						<div class="form-control">
-							<label class="label">
-								<span>Email</span>
-								<input class="input" type="text" v-model="userCreate.email">
-							</label>
-						</div>
-						<div class="form-control">
-							<label class="label">
-								<span>Contraseña</span>
-								<input class="input" type="text" v-model="userCreate.password">
-							</label>
-						</div>
-						<div class="form-control">
-							<label class="label">
-								Role
-								<select v-model="userCreate.role">
-									<option value="USER">User</option>
-									<option value="ADMIN">Admin</option>
-								</select>
-							</label>
-						</div>
-					</div>
-					<button class="btn btn--see" type="button" @click="createUser()">Crear usuario</button>
-				</main>
-			</article>
+						<button class="btn btn--see" type="button" @click="createUser()">Crear usuario</button>
+					</main>
+				</article>
+			</template>
 		</div>
   </section>
 </template>
@@ -203,6 +205,7 @@ export default {
 					this.$toasted.show('Contraseña cambiada correctamente', {
 						type : 'success'
 					})
+					if (this.$route.name !== 'signin') this.$router.push("/signin");
 				})
 			} catch (error) {
 				console.log('error al enviar POST para iniciar tiempo de trabajo: >> ', error);

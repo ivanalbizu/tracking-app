@@ -36,7 +36,9 @@ export default {
 
   methods: {
     userLeave () {
-      this.$socket.emit('user_leave', store.getters['auth/user']?.email)
+      if (store.getters['auth/user']?.email) {
+        this.$socket.emit('user_leave', store.getters['auth/user']?.email)
+      }
     },
 
     userEnter () {

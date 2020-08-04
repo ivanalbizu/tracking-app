@@ -1,7 +1,11 @@
 <template>
   <section class="details">
     <h2 class="title-section">Usuarios</h2>
-    <ul v-for="(user, index) in users" :key="index">
+    <div class="search-wrapper">
+      <input type="text" v-model="search" placeholder="Search title.."/>
+      <label>Buscar por correo de usuario</label>
+    </div>
+    <ul v-for="(user, index) in filteredUsers" :key="index">
       <li>{{user}}</li>
     </ul>
     <ul
@@ -38,13 +42,23 @@ export default {
   data() {
     return {
       tracks: {},
-      users: []
+      users: [],
+      search: ''
     }
   },
   created() {
     this.listarTracks()
     this.getUsers()
   },
+
+  computed: {
+    filteredUsers() {
+      return this.users.filter(user => {
+        return user.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
+  },
+
   methods: {
     async listarTracks() {
       try {

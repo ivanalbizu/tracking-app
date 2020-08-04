@@ -44,11 +44,11 @@ async function files(path) {
   const filesArr = [];
   const files = await fs.promises.readdir(path);
   for (const file of files) {
-    if (file.match(/^\d/)) {
+    if (file.split(/\.(?=[^\.]+$)/)[1] != 'json') {
       filesArr.push(file);
     }
   }
-  return JSON.stringify(filesArr);
+  return filesArr
 }
 
 module.exports = {

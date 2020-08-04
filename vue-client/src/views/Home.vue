@@ -20,7 +20,7 @@
           <p>Inicia el seguimiento de tus tiempos trabajados y las pausas que vas tomando durante tu jornada laboral</p>
         </main>
         <footer class="card__footer">
-          <router-link class="btn btn--see" to="/user">Ir a tracker</router-link>
+          <router-link class="btn btn--see" to="/track">Ir a tracker</router-link>
         </footer>
       </article>
       <article class="card">

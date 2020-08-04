@@ -1,5 +1,9 @@
 <template>
   <section class="details">
+    <h2 class="title-section">Usuarios</h2>
+    <ul v-for="(user, index) in users" :key="index">
+      <li>{{user}}</li>
+    </ul>
     <ul
       v-for="(track, index) in tracks" :key="index"
       class="date"
@@ -33,11 +37,13 @@ export default {
   name: 'stats',
   data() {
     return {
-      tracks: {}
+      tracks: {},
+      users: []
     }
   },
   created() {
-    this.listarTracks();
+    this.listarTracks()
+    this.getUsers()
   },
   methods: {
     async listarTracks() {
@@ -62,6 +68,14 @@ export default {
     },
     widthBar(total, start, end) {
       return `width: ${((this._timeToMinutes(end) - this._timeToMinutes(start)) / total) * 100}%`
+    },
+    async getUsers () {
+      try {
+        const result = await axios.get('/stats/users');
+        this.users = result.data;
+      } catch (error) {
+        console.log('error al obtener todos los usuarios :>> ', error);
+      }
     }
   }
 }

@@ -330,6 +330,55 @@ input, button {
   }
 }
 
+.date {
+  padding: 20px 30px 5px;
+  background-color: #fff;
+  margin-bottom: 30px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
+}
+.date-bar {
+  height: 80px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+.date-bar-title {
+  font-size: 14px;
+  background: var(--color-gray-dark);
+  text-align: center;
+  padding: 2px;
+}
+li > ul {
+  display: flex;
+  justify-content: flex-start;
+  box-shadow: 1px 1px 6px rgba(0,0,0,.2);
+  margin-top: auto;
+  li {
+    height: 8px;
+    span {
+      font-size: 12px;
+      font-style: italic;
+      transform: translate(-50%, -30px);
+      display: inline-block;
+    }
+    &.is-now + li {
+      span {
+        transform: translate(-50%, 15px);
+        animation: pulse-color 1s ease infinite;
+      }
+    }
+  }
+  [data-type='work'] {
+    background-color: var(--color-orange);
+  }
+  [data-type='break'] {
+    background-color: var(--color-blue-dark);
+  }
+}
+li[data-end] .time-end {
+  display: none;
+}
 
 .select_container {
   display: inline-block;

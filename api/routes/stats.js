@@ -32,4 +32,20 @@ router.get('/', auth, async (req, res) => {
   }
 })
 
+router.get('/users', auth, async (req, res) => {
+  try {
+    const mail = req.user.email;
+    const today = getDate(new Date());
+
+    const file = `./data/${mail}/${today.split('-')[2]}-${today.split('-')[1]}.json`;
+
+    const users = await fspromises.files('./data')
+
+    res.json(users);
+  } catch(error) {
+    res.json(error);
+    console.log('error get page:>> ', error);
+  }
+})
+
 module.exports = router;

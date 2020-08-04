@@ -49,6 +49,16 @@ Vue.use(VueRouter)
       requiresAuth: true,
       title: 'Personal Config Page - Tracker App',
     }
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: () => import(/* webpackChunkName: "admin" */ '../views/Admin.vue'),
+    meta: {
+      requiresAuth: true,
+      requiresRoleAdmin: true,
+      title: 'Personal Config Page - Tracker App',
+    }
   }
 ]
 
@@ -61,10 +71,15 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(route => route.meta.requiresAuth)) {
     if (!store.getters['auth/authenticated']) {
-      next({
-        path: 'signin'
-      })
+      next({path: 'signin'})
     } else {
+      if (to.matched.some(route => route.meta.requiresRoleAdmin)) {
+        if (store.getters['auth/user'].role != 'ADMIN') {
+          next({path: '/'})
+        } else {
+          next()
+        }
+      }
       next()
     }
   } else {

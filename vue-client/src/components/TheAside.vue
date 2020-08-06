@@ -73,4 +73,14 @@
     }
   }
 }
+@media (max-width: 768px) {
+  .aside {
+    .nav {
+      display: flex;
+      &__item {
+        flex: 1;
+      }
+    }
+  }
+}
 </style>

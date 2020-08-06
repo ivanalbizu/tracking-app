@@ -48,4 +48,24 @@ router.get('/users', auth, async (req, res) => {
   }
 })
 
+router.get('/user/:id', auth, async (req, res) => {
+  try {
+    const mail = req.params.id;
+    const today = getDate(new Date());
+
+    const file = `./data/${mail}/${today.split('-')[2]}-${today.split('-')[1]}.json`;
+
+    //await startNewMonth(file, mail);
+    if (fspromises.checkFileExists(file)) {
+      const read = await fspromises.readPromise(file);
+      const data = await JSON.parse(read);
+      res.json(data);
+    }
+  } catch(error) {
+    res.json(error);
+    console.log('error get page:>> ', error);
+  }
+})
+
+
 module.exports = router;

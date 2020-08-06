@@ -4,12 +4,15 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import VueSocketIO from 'vue-socket.io'
-import Toasted from 'vue-toasted';
+import Toasted from 'vue-toasted'
+import VModal from 'vue-js-modal'
+
 
 Vue.use(Toasted, {
   duration: 5000,
   position: 'bottom-right'
 })
+Vue.use(VModal)
 
 require('@/store/subscriber')
 

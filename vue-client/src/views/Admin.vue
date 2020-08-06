@@ -2,52 +2,29 @@
   <section class="details">
     <h2 class="title-section">Usuarios</h2>
     <div class="search-wrapper">
-      <input type="text" v-model="search" placeholder="Search title.."/>
-      <label>Buscar por correo de usuario</label>
+      <label>
+        <input class="input" type="text" v-model="search" placeholder="Buscar por correo de usuario"/>
+      </label>
     </div>
     <ul v-for="(user, index) in filteredUsers" :key="index">
-      <li>{{user}}</li>
-    </ul>
-    <ul
-      v-for="(track, index) in tracks" :key="index"
-      class="date"
-      :data-date="index"
-      :data-total="totalDayTime(track[0].time_start, track[track.length-1].time_end)"
-      :data-start="track[0].time_start"
-      :data-end="track[track.length-1].time_end">
-      <li
-        class="date-bar">
-        <span class="date-bar-title">{{index}}</span>
-        <ul class="date-track">
-          <li
-            v-for="(day, index) in track" :key="index"
-            :data-type="day.type"
-            :data-start="day.time_start"
-            :data-end="day.time_end"
-            :style="widthBar(totalDayTime(track[0].time_start, track[track.length-1].time_end), day.time_start, day.time_end)">
-            <span class="time-start">{{day.time_start}}</span>
-            <span class="time-end">{{day.time_end}}</span>
-          </li>
-        </ul>
-      </li>
+      <li @click="getUser(user)">{{user}}</li>
     </ul>
   </section>
 </template>
 
 <script>
 import axios from 'axios'
+import ModalUser from '@/components/ModalUser.vue'
 
 export default {
   name: 'stats',
   data() {
     return {
-      tracks: {},
       users: [],
       search: ''
     }
   },
   created() {
-    this.listarTracks()
     this.getUsers()
   },
 
@@ -60,14 +37,35 @@ export default {
   },
 
   methods: {
-    async listarTracks() {
+    async getUsers () {
       try {
-        const result = await axios.get('/stats');
-        this.tracks = result.data.tracking;
+        const result = await axios.get('/stats/users');
+        this.users = result.data;
       } catch (error) {
-        console.log('error al listar tracks: >> ', error);
+        console.log('error al obtener todos los usuarios :>> ', error);
       }
     },
+
+    async getUser (email) {
+      try {
+        const result = await axios.get(`/stats/user/${email}`);
+        this.$modal.show(
+          ModalUser,
+          {
+            user: email,
+            tracks: result.data.tracking
+          },
+          {
+            adaptative: true,
+            width: '80%',
+            height: 'auto'
+          }
+        )
+      } catch (error) {
+        console.log('error levantando modal de usuario:>> ', error);
+      }
+    },
+
     totalDayTime(start, end) {
       return this._timeToMinutes(end) - this._timeToMinutes(start);
     },
@@ -82,14 +80,6 @@ export default {
     },
     widthBar(total, start, end) {
       return `width: ${((this._timeToMinutes(end) - this._timeToMinutes(start)) / total) * 100}%`
-    },
-    async getUsers () {
-      try {
-        const result = await axios.get('/stats/users');
-        this.users = result.data;
-      } catch (error) {
-        console.log('error al obtener todos los usuarios :>> ', error);
-      }
     }
   }
 }

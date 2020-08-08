@@ -17,13 +17,15 @@ import axios from 'axios'
 import ModalUser from '@/components/ModalUser.vue'
 
 export default {
-  name: 'stats',
+  name: 'admin',
+
   data() {
     return {
       users: [],
       search: ''
     }
   },
+
   created() {
     this.getUsers()
   },
@@ -49,15 +51,16 @@ export default {
     async getUser (email) {
       try {
         const result = await axios.get(`/stats/user/${email}`);
+        const tracks = result.data.tracking;
         this.$modal.show(
           ModalUser,
           {
             user: email,
-            tracks: result.data.tracking
+            tracks: tracks
           },
           {
             adaptative: true,
-            width: '80%',
+            width: '90%',
             height: 'auto'
           }
         )

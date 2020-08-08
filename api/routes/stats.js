@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const fspromises = require('../helpers/fspromises');
-const request = require('../helpers/request');
 const { auth } = require('../helpers/auth');
 
 const getDate = today => {
@@ -37,8 +36,6 @@ router.get('/users', auth, async (req, res) => {
     const mail = req.user.email;
     const today = getDate(new Date());
 
-    const file = `./data/${mail}/${today.split('-')[2]}-${today.split('-')[1]}.json`;
-
     const users = await fspromises.files('./data')
 
     res.json(users);
@@ -56,10 +53,12 @@ router.get('/user/:id', auth, async (req, res) => {
     const file = `./data/${mail}/${today.split('-')[2]}-${today.split('-')[1]}.json`;
 
     //await startNewMonth(file, mail);
-    if (fspromises.checkFileExists(file)) {
+    if (await fspromises.checkFileExists(file)) {
       const read = await fspromises.readPromise(file);
       const data = await JSON.parse(read);
       res.json(data);
+    } else {
+      res.json({tracking:{}})
     }
   } catch(error) {
     res.json(error);

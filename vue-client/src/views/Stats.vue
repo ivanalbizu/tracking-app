@@ -1,5 +1,13 @@
 <template>
   <section class="details">
+    <div> 
+      <select v-model="monthSelected">
+        <option value="" disabled>Mes</option>
+        <option v-for="(month, index) in months" :key="index" v-bind:value="month">
+          {{ month }}
+        </option>
+      </select>
+    </div>
     <ul
       v-for="(track, index) in tracks" :key="index"
       class="date"
@@ -33,17 +41,29 @@ export default {
   name: 'stats',
   data() {
     return {
-      tracks: {}
+      tracks: {},
+      months: [],
+      monthSelected: ''
+    }
+  },
+  watch: {
+    async monthSelected () {
+      try {
+        const result = await axios.get(`/stats/stat/${this.monthSelected}`);
+        this.tracks = result.data.tracking;
+      } catch (error) {
+        console.log('error al listar tracks: >> ', error);
+      }
     }
   },
   created() {
-    this.listarTracks();
+    this.listMonths()
   },
   methods: {
-    async listarTracks() {
+    async listMonths () {
       try {
-        const result = await axios.get('/stats');
-        this.tracks = result.data.tracking;
+        const result = await axios.get('/stats/month');
+        this.months = result.data;
       } catch (error) {
         console.log('error al listar tracks: >> ', error);
       }

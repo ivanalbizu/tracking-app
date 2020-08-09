@@ -51,10 +51,24 @@ async function files(path) {
   return filesArr
 }
 
+async function months(path) {
+  const filesArr = [];
+  const files = await fs.promises.readdir(path);
+  for (const file of files) {
+    if ((/\.(?=[^\.]+$)/)) {
+      if (file != 'user-template.json') {
+        filesArr.push(file.split('.')[0]);
+      }
+    }
+  }
+  return filesArr
+}
+
 module.exports = {
   checkFileExists,
   readPromise,
   writePromise,
   createDir,
-  files
+  files,
+  months
 }

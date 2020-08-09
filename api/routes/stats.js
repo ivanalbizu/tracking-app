@@ -12,12 +12,13 @@ const getDate = today => {
   else return `${day}-${month}-${year}`
 }
 
-router.get('/', auth, async (req, res) => {
+router.get('/stat/:month', auth, async (req, res) => {
   try {
     const mail = req.user.email;
+    const month = req.params.month;
     const today = getDate(new Date());
 
-    const file = `./data/${mail}/${today.split('-')[2]}-${today.split('-')[1]}.json`;
+    const file = `./data/${mail}/${month}.json`;
 
     //await startNewMonth(file, mail);
     if (fspromises.checkFileExists(file)) {
@@ -25,6 +26,22 @@ router.get('/', auth, async (req, res) => {
       const data = await JSON.parse(read);
       res.json(data);
     }
+  } catch(error) {
+    res.json(error);
+    console.log('error get page:>> ', error);
+  }
+})
+
+router.get('/month', auth, async (req, res) => {
+  try {
+    const mail = req.user.email;
+    const today = getDate(new Date());
+
+    const path = `./data/${mail}/`;
+
+    const read = await fspromises.months(path);
+    res.json(read);
+    
   } catch(error) {
     res.json(error);
     console.log('error get page:>> ', error);

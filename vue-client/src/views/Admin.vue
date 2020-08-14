@@ -50,13 +50,10 @@ export default {
 
     async getUser (email) {
       try {
-        const result = await axios.get(`/stats/user/${email}`);
-        const tracks = result.data.tracking;
         this.$modal.show(
           ModalUser,
           {
-            user: email,
-            tracks: tracks
+            user: email
           },
           {
             adaptative: true,

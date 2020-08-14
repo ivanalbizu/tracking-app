@@ -26,7 +26,7 @@
   </aside>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .aside {
   display: flex;
   flex-direction: column;

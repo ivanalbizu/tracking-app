@@ -237,7 +237,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .planning {
   &-time {
     display: flex;

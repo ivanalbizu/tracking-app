@@ -70,22 +70,6 @@ export default {
       } catch (error) {
         console.log('error levantando modal de usuario:>> ', error);
       }
-    },
-
-    totalDayTime(start, end) {
-      return this._timeToMinutes(end) - this._timeToMinutes(start);
-    },
-    _timeToMinutes(time) {
-      let a = time.split(':');
-      if (isNaN(a[0])) {
-        const date = new Date();
-        a[0] = date.getHours();
-        a[1] = date.getMinutes();
-      }
-      return (+a[0]) * 60 + (+a[1]);
-    },
-    widthBar(total, start, end) {
-      return `width: ${((this._timeToMinutes(end) - this._timeToMinutes(start)) / total) * 100}%`
     }
   }
 }

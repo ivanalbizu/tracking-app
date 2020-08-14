@@ -1,16 +1,5 @@
 <template>
   <div>
-
-    <div>
-      Mes: 
-      <select v-model="monthSelected">
-        <option value="" disabled>Mes</option>
-        <option v-for="(month, index) in months" :key="index" v-bind:value="month">
-          {{ month }}
-        </option>
-      </select>
-    </div>
-    
     <template v-if="tracks">
       <ul
         v-for="(track, index) in tracks" :key="index"
@@ -36,50 +25,18 @@
         </li>
       </ul>
     </template>
-
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   props: {
-    user: String
-  },
-
-  data() {
-    return {
-      tracks: {},
-      months: [],
-      monthSelected: ''
-    }
-  },
-
-  watch: {
-    async monthSelected () {
-      try {
-        const result = await axios.get(`/stats/stat/${this.user}/${this.monthSelected}`);
-        this.tracks = result.data.tracking;
-      } catch (error) {
-        console.log('error al listar tracks: >> ', error);
-      }
-    }
-  },
-
-  created() {
-    this.listMonths()
+    user: String,
+    tracks: Object
   },
 
   methods: {
-    async listMonths () {
-      try {
-        const result = await axios.get(`/stats/stat/${this.user}`);
-        this.months = result.data;
-      } catch (error) {
-        console.log('error al listar tracks: >> ', error);
-      }
-    },
     totalDayTime(start, end) {
       return this._timeToMinutes(end) - this._timeToMinutes(start);
     },
@@ -96,5 +53,6 @@ export default {
       return `width: ${((this._timeToMinutes(end) - this._timeToMinutes(start)) / total) * 100}%`
     }
   }
+
 }
 </script>

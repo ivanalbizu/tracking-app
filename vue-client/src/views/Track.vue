@@ -231,7 +231,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .current-work-day {
   [data-type] {
     margin-bottom: 20px;

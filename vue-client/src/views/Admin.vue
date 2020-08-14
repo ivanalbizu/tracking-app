@@ -6,8 +6,14 @@
         <input class="input" type="text" v-model="search" placeholder="Buscar por correo de usuario"/>
       </label>
     </div>
-    <ul v-for="(user, index) in filteredUsers" :key="index">
-      <li @click="getUser(user)">{{user}}</li>
+    <ul class="users">
+      <li
+        v-for="(user, index) in filteredUsers"
+        :key="index"
+        class="user"
+        >
+          <button @click="getUser(user)" class="btn-user" type="button">{{user}}</button>
+        </li>
     </ul>
   </section>
 </template>
@@ -84,3 +90,23 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.search-wrapper {
+  margin-bottom: 2em;
+}
+.users {
+  display: flex;
+  flex-wrap: wrap;
+  .user {
+    display: inline-flex;
+  }
+  .btn-user {
+    padding: 5px 20px;
+    margin: 0 10px 10px 0;
+    color: #fff;
+    background-color: var(--color-blue-dark);
+    cursor: pointer;
+  }
+}
+</style>

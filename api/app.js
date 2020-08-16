@@ -33,6 +33,16 @@ app.use(express.urlencoded({
   extended: true
 }));
 app.use('/api', require('./routes/index'));
+
+// Handle production
+if (process.env.NODE_ENV === 'production') {
+  // Static folder
+  app.use(express.static(__dirname + '/public/'));
+  
+  // Handle SPA
+  app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'))
+}
+
 const history = require('connect-history-api-fallback');
 app.use(history());
 

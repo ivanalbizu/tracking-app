@@ -22,9 +22,7 @@ import { mapActions } from "vuex";
 
 export default {
   name: 'signin',
-  components: {
-    //
-  },
+
   data() {
     return {
       form: {
@@ -33,12 +31,15 @@ export default {
       }
     }
   },
+
   mounted () {
     document.body.classList.add('signin')
   },
+
   destroyed () {
     document.body.classList.remove('signin')
   },
+
   methods: {
     ...mapActions({
       signIn: 'auth/signIn'
@@ -53,6 +54,7 @@ export default {
         })
     }
   }
+
 }
 </script>
 

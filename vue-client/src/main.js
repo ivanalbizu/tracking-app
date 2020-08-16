@@ -16,7 +16,7 @@ Vue.use(VModal)
 
 require('@/store/subscriber')
 
-axios.defaults.baseURL = 'http://localhost:8081/api/'
+axios.defaults.baseURL = 'api/'
 
 Vue.use(new VueSocketIO({
   debug: true,

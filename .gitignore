@@ -6,7 +6,6 @@ vue-client/node_modules
 node_modules
 data/*/*.json
 config/config.env
-config/database.js
 
 # local env files
 vue-client/.env.local

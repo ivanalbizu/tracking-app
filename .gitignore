@@ -2,11 +2,11 @@ vue-client/.DS_Store
 vue-client/node_modules
 /vue-client/dist
 
-api/.DS_Store
-api/node_modules
-api/data/*/*.json
-api/config/config.env
-api/config/database.js
+.DS_Store
+node_modules
+data/*/*.json
+config/config.env
+config/database.js
 
 # local env files
 vue-client/.env.local

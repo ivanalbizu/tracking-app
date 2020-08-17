@@ -208,7 +208,7 @@ export default {
         const notification = new Notification(title, options);
         notification.onclick = function(event) {
           event.preventDefault();
-          window.open('http://localhost:8080/track', '_blank');
+          window.open('/track', '_blank');
         }
         this.notifyID = null;
       }, timeout);

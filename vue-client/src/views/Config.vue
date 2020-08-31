@@ -243,16 +243,32 @@ export default {
   &-time {
     display: flex;
     justify-content: space-between;
+		padding: 3px 5px 3px 10px;
+		&:nth-child(even) {
+			background-color: var(--color-gray-light);
+		}
+		&:first-of-type {
+			margin-bottom: 5px;
+		}
     .dia {
       width: 100px;
+			margin-right: auto;
     }
+		.comienzo,
+		.fin {
+			width: 100px;
+			text-align: right;
+			input {
+				background-color: transparent;
+			}
+		}
   }
 }
 .config {
 	.cards {
 		.card {
-			@media (min-width: 978px) {
-				width: 48%;
+			@media (min-width: 1024px) {
+				width: 49%;
 			}
 		}
 	}

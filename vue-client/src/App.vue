@@ -62,6 +62,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400&display=swap');
 :root {
   --color-orange: #DD6E42;
   --color-cake: #E8DAB2;
@@ -122,7 +123,7 @@ li {
   list-style: none;
 }
 body {
-  font-family: 'Nunito', Helvetica, sans-serif;
+  font-family: 'Nunito Sans', Helvetica, sans-serif;
   background-color: var(--color-gray-light);
   color: #202121;
   display: flex;
@@ -216,7 +217,7 @@ input, button {
     width: 210px;
     max-width: 100%;
     border-radius: 0;
-    border-top: 3px solid var(--color-orange);
+    border: 1px solid var(--color-orange);
     color: var(--color-orange);
     transition: border .15s ease-in-out, background-color .15s ease-in-out, color .15s ease-in-out;
     &:hover,
@@ -320,7 +321,7 @@ input, button {
       margin-top: auto;
     }
     width: 100%;
-    @media (min-width: 978px) {
+    @media (min-width: 1024px) {
       width: 31.33%;
       &__footer {
         margin-left: auto;

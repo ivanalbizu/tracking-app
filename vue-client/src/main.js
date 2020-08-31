@@ -20,7 +20,7 @@ axios.defaults.baseURL = 'api/'
 
 Vue.use(new VueSocketIO({
   debug: true,
-  connection: 'https://calm-sierra-02190.herokuapp.com/',
+  connection: 'http://localhost:8081',
   vuex: {
     store,
     actionPrefix: 'SOCKET_',

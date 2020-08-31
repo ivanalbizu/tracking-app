@@ -104,7 +104,7 @@ li > ul {
     background-color: var(--color-blue-dark);
   }
 }
-li[data-end] .time-end {
+li[data-end]:not(:last-of-type) .time-end {
   display: none;
 }
 </style>

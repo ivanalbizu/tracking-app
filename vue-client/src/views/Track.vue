@@ -238,6 +238,7 @@ export default {
     border-left: 3px solid;
     background-color: #fff;
     padding: 5px 15px;
+    box-shadow: 0 0 5px rgba(0,0,0,.1);
   }
   [data-type="work"] {
     border-color: var(--color-orange);
